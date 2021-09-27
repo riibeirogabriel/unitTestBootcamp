@@ -50,10 +50,22 @@ public class GerenciadoraClientesTest {
     @Test
     public void testAdicionaCliente_adicaoDeNovoCliente_clienteCadastradoComSucesso() {
         int idNovoCliente = 5;
-        Cliente novoCLiente = new Cliente(idNovoCliente, "Gabriel Farias", 45, "gugafarias@outlook.com", 1, true);
+        int idadeNovoCliente = 45;
+        String nomeNovoCliente = "Gabriel Farias";
+        String emailNovoCliente = "gugafarias@outlook.com";
+        int idContaCorrente = 1;
+        Boolean statusContaCorrente = true;
+        Cliente novoCLiente = new Cliente(idNovoCliente, nomeNovoCliente, idadeNovoCliente, emailNovoCliente, idContaCorrente, statusContaCorrente);
         gerenciadoraClientes.adicionaCliente(novoCLiente);
 
-        assertEquals(idNovoCliente, gerenciadoraClientes.pesquisaCliente(idNovoCliente).getId());
+        Cliente clienteCadastrado = gerenciadoraClientes.pesquisaCliente(idNovoCliente);
+
+        assertEquals(idNovoCliente, clienteCadastrado.getId());
+        assertEquals(idadeNovoCliente, clienteCadastrado.getIdade());
+        assertEquals(nomeNovoCliente, clienteCadastrado.getNome());
+        assertEquals(emailNovoCliente, clienteCadastrado.getEmail());
+        assertEquals(idNovoCliente, clienteCadastrado.getId());
+        assertEquals(statusContaCorrente, clienteCadastrado.isAtivo());
 
     }
 
@@ -82,7 +94,6 @@ public class GerenciadoraClientesTest {
 
     @Test
     public void testRemoveCliente_remocaoDeClienteExistente_true() {
-
         boolean clienteRemovido = gerenciadoraClientes.removeCliente(idCLiente02);
 
         assertTrue(clienteRemovido);
@@ -100,7 +111,8 @@ public class GerenciadoraClientesTest {
 
     @Test
     public void testValidaIdade_clienteComIdadeAceitavel_true() {
-        boolean idadeValida = gerenciadoraClientes.validaIdade(gerenciadoraClientes.pesquisaCliente(idCLiente01).getIdade());
+        int idadeCliente =gerenciadoraClientes.pesquisaCliente(idCLiente01).getIdade();
+        boolean idadeValida = gerenciadoraClientes.validaIdade(idadeCliente);
 
         assertTrue(idadeValida);
     }
@@ -108,16 +120,16 @@ public class GerenciadoraClientesTest {
 
     @Test
     public void testValidaIdade_clienteComIdadeAcimaDaAceitavel_false() {
-
-        boolean idadeValida = gerenciadoraClientes.validaIdade(gerenciadoraClientes.pesquisaCliente(this.idClienteIdadeInvalida01).getIdade());
+        int idadeCliente = gerenciadoraClientes.pesquisaCliente(this.idClienteIdadeInvalida01).getIdade();
+        boolean idadeValida = gerenciadoraClientes.validaIdade(idadeCliente);
 
         assertFalse(idadeValida);
     }
 
     @Test
     public void testValidaIdade_clienteComIdadeAbaixoDaAceitavel_false() {
-
-        boolean idadeValida = gerenciadoraClientes.validaIdade(gerenciadoraClientes.pesquisaCliente(this.idClienteIdadeInvalida02).getIdade());
+        int idadeCliente = gerenciadoraClientes.pesquisaCliente(this.idClienteIdadeInvalida02).getIdade();
+        boolean idadeValida = gerenciadoraClientes.validaIdade(idadeCliente);
 
         assertFalse(idadeValida);
     }

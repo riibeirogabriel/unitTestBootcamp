@@ -53,10 +53,15 @@ public class GerenciadoraContasTest {
     @Test
     public void testAdicionaConta_adicaoDeNovaConta_contaCadastradaComSucesso() {
         int idNovaConta = 3;
-        ContaCorrente novaConta = new ContaCorrente(idNovaConta, 0, true);
+        int saldoNovaConta = 0;
+        Boolean statusNovaConta = true;
+
+        ContaCorrente novaConta = new ContaCorrente(idNovaConta, saldoNovaConta, statusNovaConta);
         gerenciadoraContas.adicionaConta(novaConta);
 
         assertEquals(idNovaConta, gerenciadoraContas.pesquisaConta(idNovaConta).getId());
+        assertEquals(saldoNovaConta, gerenciadoraContas.pesquisaConta(idNovaConta).getSaldo(), VARIACAO_PERMITIDA);
+        assertEquals(statusNovaConta, gerenciadoraContas.pesquisaConta(idNovaConta).isAtiva());
 
     }
 
